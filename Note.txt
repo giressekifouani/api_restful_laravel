@@ -1,0 +1,24 @@
+MISE EN PLACE D'UN APIs RESTful AVEC LARAVEL
+
+- Installation LARAVEL
+- Installation Breezer APIs
+
+
+-Installation de Seeder pour les données factives
+
+php artisan make:seed PersonneSeeder
+ensuite lancer le sseder : php artisan db:seed
+
+
+
+POSTMAN
+
+Retour JSON standardisé pour Postman.
+
+HTTP codes corrects :
+
+200 → OK
+
+201 → Création réussie
+
+404 → Non trouvé
