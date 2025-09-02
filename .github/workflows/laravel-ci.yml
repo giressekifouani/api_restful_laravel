@@ -8,6 +8,7 @@ on:
 
 jobs:
   tests:
+    name: Run Laravel Tests
     runs-on: ubuntu-latest
 
     services:
@@ -37,19 +38,33 @@ jobs:
       - name: Install Composer dependencies
         run: composer install --prefer-dist --no-progress --no-suggest
 
-      - name: Copy .env.testing
-        run: cp .env.testing .env
-
-      - name: Generate APP_KEY
+      - name: Setup environment
         run: |
-          php -r "file_exists('.env') || copy('.env.testing', '.env');"
-          php artisan key:generate --show > key.txt
-          KEY=$(cat key.txt)
-          sed -i "s|APP_KEY=.*|APP_KEY=${KEY}|g" .env
-          rm key.txt
+          # Copier le fichier d'exemple .env ou en créer un temporaire
+          if [ -f .env.example ]; then
+            cp .env.example .env
+          else
+            echo "APP_NAME=Laravel
+            APP_ENV=testing
+            APP_KEY=
+            APP_DEBUG=true
+            APP_URL=http://localhost
+            DB_CONNECTION=mysql
+            DB_HOST=127.0.0.1
+            DB_PORT=3306
+            DB_DATABASE=apirestful1
+            DB_USERNAME=root
+            DB_PASSWORD=admin123
+            CACHE_DRIVER=array
+            SESSION_DRIVER=array
+            QUEUE_CONNECTION=sync" > .env
+          fi
 
-      - name: Clear config cache
-        run: php artisan config:clear
+          # Générer la clé APP_KEY
+          php artisan key:generate --ansi
+
+          # Vider le cache de configuration
+          php artisan config:clear
 
       - name: Run migrations
         run: php artisan migrate --force
