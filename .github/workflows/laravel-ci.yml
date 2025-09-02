@@ -41,7 +41,7 @@ jobs:
       - name: Copy .env.testing
         run: cp .env.testing .env
 
-      - name: Generate app key
+      - name: Generate application key
         run: php artisan key:generate --ansi
 
       - name: Configure database
