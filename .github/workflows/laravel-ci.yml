@@ -8,7 +8,6 @@ on:
 
 jobs:
   tests:
-    name: Run Laravel Tests
     runs-on: ubuntu-latest
 
     services:
@@ -41,8 +40,13 @@ jobs:
       - name: Copy .env.testing
         run: cp .env.testing .env
 
-      - name: Generate application key
-        run: php artisan key:generate
+      - name: Generate APP_KEY
+        run: |
+          php -r "file_exists('.env') || copy('.env.testing', '.env');"
+          php artisan key:generate --show > key.txt
+          KEY=$(cat key.txt)
+          sed -i "s|APP_KEY=.*|APP_KEY=${KEY}|g" .env
+          rm key.txt
 
       - name: Clear config cache
         run: php artisan config:clear
