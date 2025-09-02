@@ -38,27 +38,18 @@ jobs:
       - name: Install Composer dependencies
         run: composer install --prefer-dist --no-progress --no-suggest
 
-      - name: Setup environment
+      - name: Setup environment and generate APP_KEY
         run: |
-          # Copier le fichier d'exemple .env ou en créer un temporaire
-          if [ -f .env.example ]; then
-            cp .env.example .env
-          else
-            echo "APP_NAME=Laravel
-            APP_ENV=testing
-            APP_KEY=
-            APP_DEBUG=true
-            APP_URL=http://localhost
-            DB_CONNECTION=mysql
-            DB_HOST=127.0.0.1
-            DB_PORT=3306
-            DB_DATABASE=apirestful1
-            DB_USERNAME=root
-            DB_PASSWORD=admin123
-            CACHE_DRIVER=array
-            SESSION_DRIVER=array
-            QUEUE_CONNECTION=sync" > .env
-          fi
+          # Copier .env.example
+          cp .env.example .env
+
+          # Remplacer DB_CONNECTION par MySQL pour CI
+          sed -i 's/DB_CONNECTION=sqlite/DB_CONNECTION=mysql/' .env
+          sed -i 's/# DB_HOST=127.0.0.1/DB_HOST=127.0.0.1/' .env
+          sed -i 's/# DB_PORT=3306/DB_PORT=3306/' .env
+          sed -i 's/# DB_DATABASE=laravel/DB_DATABASE=apirestful1/' .env
+          sed -i 's/# DB_USERNAME=root/DB_USERNAME=root/' .env
+          sed -i 's/# DB_PASSWORD=/DB_PASSWORD=admin123/' .env
 
           # Générer la clé APP_KEY
           php artisan key:generate --ansi
