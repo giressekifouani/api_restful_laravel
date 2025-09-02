@@ -22,3 +22,17 @@ HTTP codes corrects :
 201 → Création réussie
 
 404 → Non trouvé
+
+
+
+PIPELENE CI/CD GITHUB ACTIONS
+
+CI : Integrateur continue
+CD : Déploiement continue
+
+Outils (branche) de test de pipelene : Circleci, GitHub Actions, GitLab, go, TC
+
+
+DEPLOIEMENT
+
+Déploiement sur Laravel Cloud. Plateforme de
