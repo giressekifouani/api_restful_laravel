@@ -17,8 +17,6 @@ jobs:
         env:
           MYSQL_ROOT_PASSWORD: admin123
           MYSQL_DATABASE: apirestful1
-          MYSQL_USER: root
-          MYSQL_PASSWORD: admin123
         # pas besoin d'exposer les ports pour GitHub Actions
         options: >-
           --health-cmd "mysqladmin ping -h 127.0.0.1 -uroot -padmin123 --silent"
