@@ -40,6 +40,10 @@ jobs:
       - name: Copy .env.testing
         run: cp .env.testing .env
 
+      - name: Generate app key
+        run: php artisan key:generate --ansi
+
+
       - name: Wait for MySQL to be ready
         run: |
           for i in {1..30}; do
